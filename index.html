@@ -5,9 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Night sky and flower</title>
     <link rel="stylesheet" href="flower.css" />
+    <style>
+      /* Tambahkan CSS untuk modal */
+      .modal {
+        margin-top: 70%;
+        display: flex; /* Tampilkan modal secara default */
+        position: fixed; /* Tetap di tempat */
+        z-index: 1; /* Di atas elemen lainnya */
+        left: 0;
+        top: 0;
+        width: 100%; /* Lebar penuh */
+        height: 100%; /* Tinggi penuh */
+        overflow: auto; /* Aktifkan scroll jika diperlukan */
+        background-color: rgb(0,0,0); /* Warna fallback */
+        background-color: rgba(0,0,0,0.4); /* Hitam dengan opasitas */
+        justify-content: center; /* Posisikan di tengah secara horizontal */
+        align-items: center; /* Posisikan di tengah secara vertikal */
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 90%; /* Lebar 90% dari layar */
+        max-width: 400px; /* Batas maksimal lebar */
+        text-align: center;
+      }
+
+
+
+      /* From Uiverse.io by Cevorob */ 
+      button {
+      position: relative;
+      height: 50px;
+      padding: 0 30px;
+      border: 2px solid #000;
+      background: #e8e8e8;
+      user-select: none;
+      white-space: nowrap;
+      transition: all .05s linear;
+      font-family: inherit;
+      }
+
+      button:before, button:after {
+      content: "";
+      position: absolute;
+      background: #e8e8e8;
+      transition: all .2s linear;
+      }
+
+      button:before {
+      width: calc(100% + 6px);
+      height: calc(100% - 16px);
+      top: 8px;
+      left: -3px;
+      }
+
+      button:after {
+      width: calc(100% - 16px);
+      height: calc(100% + 6px);
+      top: -3px;
+      left: 8px;
+      }
+
+      button:hover {
+      cursor: crosshair;
+      }
+
+      button:active {
+      transform: scale(0.95);
+      }
+
+      button:hover:before {
+      height: calc(100% - 32px);
+      top: 16px;
+      }
+
+      button:hover:after {
+      width: calc(100% - 32px);
+      left: 16px;
+      }
+
+      button span {
+      font-size: 15px;
+      z-index: 3;
+      position: relative;
+      font-weight: 600;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
+    <audio id="background-music" src="song.mp3" style="display:none;" loop></audio>
+    
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <button class="modal-button" id="playMusicButton"><span>Mulaai</span>ii</button>
+      </div>
+    </div>
+
+    <div class="container" id="mainContent" style="display:none;">
       <div class="circle-container">
         <div class="background-grass">
           <div class="background-blade"></div>
@@ -56,10 +153,10 @@
           <div class="middle-blade"></div>
           <div class="middle-blade"></div>
           <div class="middle-blade"></div>
-          <div class="middle-blade"></div>
-          
         </div>
         <div class="foreground-grass">
+          <div class="foreground-blade"></div>
+          <div class="foreground-blade"></div>
           <div class="foreground-blade"></div>
           <div class="foreground-blade"></div>
           <div class="foreground-blade"></div>
@@ -131,7 +228,6 @@
           <div></div>
           <div></div>
         </div>
-        
         <div class="deadPetals">
           <div></div>
           <div></div>
@@ -143,6 +239,29 @@
         </div>
       </div>
     </div>
+    <script>
+      // Tampilkan modal saat halaman dimuat
+      window.onload = function() {
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+      }
+
+      // Mulai musik saat tombol ditekan
+      document.getElementById("playMusicButton").onclick = function() {
+        var audio = document.getElementById("background-music");
+        audio.play();
+        var modal = document.getElementById("myModal");
+        modal.style.display = "none";
+        var mainContent = document.getElementById("mainContent");
+        mainContent.style.display = "block";
+      }
+
+      // Hentikan musik saat halaman ditutup
+      window.addEventListener('beforeunload', function () {
+        var audio = document.getElementById('background-music');
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    </script>
   </body>
 </html>
-
